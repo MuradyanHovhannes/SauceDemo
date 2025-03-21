@@ -80,7 +80,7 @@ namespace SauceDemo.Tests
         {
             #region Parameters
 
-            var password = "secret_sauce";
+            var password = "";
 
             #endregion
 
