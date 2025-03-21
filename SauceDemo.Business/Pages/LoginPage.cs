@@ -22,17 +22,34 @@ namespace SauceDemo.Business.Pages
         public void EnterUsername(string username)
         {
             var element = driver.FindElement(usernameField);
-            element.SendKeys(Keys.Control + "A");
-            element.SendKeys(Keys.Backspace);
+            ClearFieldsViaKeyboard(element);
             element.SendKeys(username);
         }
 
         public void EnterPassword(string password)
         {
             var element = driver.FindElement(passwordField);
+            ClearFieldsViaKeyboard(element);
+            element.SendKeys(password);
+        }
+
+
+        public void ClearFieldsViaKeyboard(IWebElement element)
+        {
             element.SendKeys(Keys.Control + "A");
             element.SendKeys(Keys.Backspace);
-            element.SendKeys(password);
+        }
+
+        public void ClearUserNameField()
+        {
+            var element = driver.FindElement(usernameField);
+            ClearFieldsViaKeyboard(element);
+        }
+
+        public void ClearPasswordField()
+        {
+            var element = driver.FindElement(passwordField);
+            ClearFieldsViaKeyboard(element);
         }
 
         public void ClickLogin()

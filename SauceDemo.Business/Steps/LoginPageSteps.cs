@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using SauceDemo.Business.Pages;
 
 namespace SauceDemo.Business.Steps
@@ -38,5 +33,13 @@ namespace SauceDemo.Business.Steps
         public string GetErrorMessage()
           => loginPage.GetErrorMessage();
 
+        public void ClearPasswordField()
+          => loginPage.ClearPasswordField();
+
+        public void ClearUserNameAndPasswordField()
+        {
+            loginPage.ClearUserNameField();
+            loginPage.ClearPasswordField();
+        }
     }
 }

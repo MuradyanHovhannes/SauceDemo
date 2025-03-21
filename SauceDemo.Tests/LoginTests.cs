@@ -45,7 +45,7 @@ namespace SauceDemo.Tests
             #endregion
 
             loginPageSteps.EnterUsernameAndPssword(invalidUsernameAndPassword1, invalidUsernameAndPassword1);
-            loginPageSteps.EnterUsernameAndPssword(invalidUsernameAndPassword2, invalidUsernameAndPassword2);
+            loginPageSteps.ClearUserNameAndPasswordField();
             loginPageSteps.ClickOnLoginButton();
             var errorMsg = loginPageSteps.GetErrorMessage();
             log.Info($"UC-1 - Error Message: {errorMsg}");
@@ -60,11 +60,12 @@ namespace SauceDemo.Tests
             #region Parameters
 
             var invalidUsername = "anyUsername";
-            var emptyPassword = string.Empty;
+            var tempPassword = "temp";
 
             #endregion
 
-            loginPageSteps.EnterUsernameAndPssword(invalidUsername, emptyPassword);
+            loginPageSteps.EnterUsernameAndPssword(invalidUsername, tempPassword);
+            loginPageSteps.ClearPasswordField();
             loginPageSteps.ClickOnLoginButton();
             var errorMsg = loginPageSteps.GetErrorMessage();
             log.Info($"UC-2 - Error Message: {errorMsg}");
