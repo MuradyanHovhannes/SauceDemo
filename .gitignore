@@ -1,0 +1,46 @@
+vs/
+*.user 
+*.suo 
+*.swp 
+*.sln.docstates
+
+bin/
+obj/
+
+*.nupkg packages/
+
+project.lock.json
+
+.cache/
+.fuse/
+.vscode/
+
+*.log
+*.testresults 
+TestResults/ 
+._.
+
+PublishProfiles/
+
+*.DotSettings.user
+*.ReSharper _Resharper. 
+*.sln.cache 
+*.idea/ 
+*.dotCover
+
+coverage/ 
+*.coverage 
+*.coveragexml
+
+Thumbs.db ehthumbs.db
+
+.DS_Store .AppleDouble .LSOverride
+
+*~
+*.v2
+*.vsidx
+*.wsuo
+*.json
+*.bin
+*.manifest
+*.testlog

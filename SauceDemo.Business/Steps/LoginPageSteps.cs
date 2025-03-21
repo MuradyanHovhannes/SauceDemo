@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using OpenQA.Selenium;
+using SauceDemo.Business.Pages;
+
+namespace SauceDemo.Business.Steps
+{
+    public class LoginPageSteps
+    {
+        private readonly IWebDriver driver;
+        private LoginPage loginPage;
+
+        public LoginPageSteps(IWebDriver driver)
+        {
+            this.driver = driver;
+            loginPage = new LoginPage(driver);
+        }
+
+        public void GoToLoginPage()
+        {
+            var url = "https://www.saucedemo.com/";
+            loginPage.GoToPage(url);
+            loginPage.WaitForPageToLoad();
+        }
+
+        public void EnterUsernameAndPssword(string username, string password)
+        {
+            loginPage.EnterUsername(username);
+            loginPage.EnterPassword(password);
+        }
+
+        public void ClickOnLoginButton()
+          => loginPage.ClickLogin();
+
+        public string GetErrorMessage()
+          => loginPage.GetErrorMessage();
+
+    }
+}
