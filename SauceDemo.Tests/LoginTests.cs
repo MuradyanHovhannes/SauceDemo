@@ -79,6 +79,7 @@ namespace SauceDemo.Tests
         {
             #region Parameters
 
+            //Enter valid password here(You can get it from SauceDemo website)
             var password = "";
 
             #endregion
