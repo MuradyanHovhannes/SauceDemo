@@ -33,7 +33,6 @@ namespace SauceDemo.Business.Pages
             element.SendKeys(password);
         }
 
-
         public void ClearFieldsViaKeyboard(IWebElement element)
         {
             element.SendKeys(Keys.Control + "A");

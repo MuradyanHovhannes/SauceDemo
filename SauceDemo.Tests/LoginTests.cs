@@ -39,12 +39,11 @@ namespace SauceDemo.Tests
         {
             #region Parameters
 
-            var invalidUsernameAndPassword1 = "temp";
-            var invalidUsernameAndPassword2 = string.Empty;
+            var invalidUsernameAndPassword = "temp";
 
             #endregion
 
-            loginPageSteps.EnterUsernameAndPssword(invalidUsernameAndPassword1, invalidUsernameAndPassword1);
+            loginPageSteps.EnterUsernameAndPassword(invalidUsernameAndPassword, invalidUsernameAndPassword);
             loginPageSteps.ClearUserNameAndPasswordField();
             loginPageSteps.ClickOnLoginButton();
             var errorMsg = loginPageSteps.GetErrorMessage();
@@ -64,7 +63,7 @@ namespace SauceDemo.Tests
 
             #endregion
 
-            loginPageSteps.EnterUsernameAndPssword(invalidUsername, tempPassword);
+            loginPageSteps.EnterUsernameAndPassword(invalidUsername, tempPassword);
             loginPageSteps.ClearPasswordField();
             loginPageSteps.ClickOnLoginButton();
             var errorMsg = loginPageSteps.GetErrorMessage();
@@ -84,7 +83,7 @@ namespace SauceDemo.Tests
 
             #endregion
 
-            loginPageSteps.EnterUsernameAndPssword(validUsername, password);
+            loginPageSteps.EnterUsernameAndPassword(validUsername, password);
             loginPageSteps.ClickOnLoginButton();
             log.Info("Login to website");
             driver.Title.Should().Be("Swag Labs", because: "user should be navigated to the dashboard with correct title");

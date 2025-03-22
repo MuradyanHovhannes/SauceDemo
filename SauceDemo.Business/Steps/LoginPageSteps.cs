@@ -21,7 +21,7 @@ namespace SauceDemo.Business.Steps
             loginPage.WaitForPageToLoad();
         }
 
-        public void EnterUsernameAndPssword(string username, string password)
+        public void EnterUsernameAndPassword(string username, string password)
         {
             loginPage.EnterUsername(username);
             loginPage.EnterPassword(password);
