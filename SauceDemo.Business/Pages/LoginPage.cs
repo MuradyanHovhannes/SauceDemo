@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using SauceDemo.Core.Helper;
 using SeleniumExtras.WaitHelpers;
 
 namespace SauceDemo.Business.Pages
@@ -14,6 +15,8 @@ namespace SauceDemo.Business.Pages
         {
         }
 
+        public string ErrorMessage => driver.FindElement(errorMessageContainer).Text;
+
         public void WaitForPageToLoad()
         {
             wait.Until(ExpectedConditions.ElementToBeClickable(usernameField));
@@ -22,42 +25,37 @@ namespace SauceDemo.Business.Pages
         public void EnterUsername(string username)
         {
             var element = driver.FindElement(usernameField);
-            ClearFieldsViaKeyboard(element);
+            ClearUserNameField();
             element.SendKeys(username);
         }
 
         public void EnterPassword(string password)
         {
             var element = driver.FindElement(passwordField);
-            ClearFieldsViaKeyboard(element);
+            ClearPasswordField();
             element.SendKeys(password);
-        }
-
-        public void ClearFieldsViaKeyboard(IWebElement element)
-        {
-            element.SendKeys(Keys.Control + "A");
-            element.SendKeys(Keys.Backspace);
         }
 
         public void ClearUserNameField()
         {
             var element = driver.FindElement(usernameField);
-            ClearFieldsViaKeyboard(element);
+            SeleniumExtensions.ClearFieldsViaKeyboard(element);
         }
 
         public void ClearPasswordField()
         {
             var element = driver.FindElement(passwordField);
-            ClearFieldsViaKeyboard(element);
+            SeleniumExtensions.ClearFieldsViaKeyboard(element);
         }
 
         public void ClickLogin()
         {
-            wait.Until(ExpectedConditions.ElementToBeClickable(loginButton));
+            wait.Until(driver =>
+            {
+                IWebElement element = driver.FindElement(loginButton);
+                return element != null && element.Enabled;
+            });
             driver.FindElement(loginButton).Click();
         }
-
-        public string GetErrorMessage()
-           => driver.FindElement(errorMessageContainer).Text;
     }
 }

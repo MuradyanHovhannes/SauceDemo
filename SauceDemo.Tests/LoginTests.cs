@@ -3,7 +3,7 @@ using Xunit.Abstractions;
 using SauceDemo.Core.Driver;
 using log4net;
 using FluentAssertions;
-using SauceDemo.Business.Steps;
+using SauceDemo.Business.Pages;
 
 namespace SauceDemo.Tests
 {
@@ -11,17 +11,19 @@ namespace SauceDemo.Tests
     public class LoginTests : IDisposable
     {
         private readonly IWebDriver driver;
-        private LoginPageSteps loginPageSteps;
+        private LoginPage loginPage;
         private static readonly ILog log = LogManager.GetLogger(typeof(LoginTests));
+        private readonly string url = "https://www.saucedemo.com/";
 
         public LoginTests(ITestOutputHelper output)
         {
             log.Info("Initializing test...");
             driver = WebDriverFactory.CreateWebDriver("Edge");
             driver.Manage().Window.Maximize();
-            loginPageSteps = new LoginPageSteps(driver);
+            loginPage = new LoginPage(driver);
             log.Info("Go to Login Page");
-            loginPageSteps.GoToLoginPage();
+            loginPage.GoToPage(url);
+            loginPage.WaitForPageToLoad();
         }
 
         public static IEnumerable<object[]> ValidUsernames()
@@ -40,15 +42,17 @@ namespace SauceDemo.Tests
             #region Parameters
 
             var invalidUsernameAndPassword = "temp";
+            var expectedErrorMessage = "Username is required";
 
             #endregion
-
-            loginPageSteps.EnterUsernameAndPassword(invalidUsernameAndPassword, invalidUsernameAndPassword);
-            loginPageSteps.ClearUserNameAndPasswordField();
-            loginPageSteps.ClickOnLoginButton();
-            var errorMsg = loginPageSteps.GetErrorMessage();
+            loginPage.EnterUsername(invalidUsernameAndPassword);
+            loginPage.ClearUserNameField();
+            loginPage.EnterPassword(invalidUsernameAndPassword);
+            loginPage.ClearPasswordField();
+            loginPage.ClickLogin();
+            var errorMsg = loginPage.ErrorMessage;
             log.Info($"UC-1 - Error Message: {errorMsg}");
-            errorMsg.Should().Contain("Username is required");
+            errorMsg.Should().Contain(expectedErrorMessage, "Incorrect error message was shown on Login page after entering empty credentials!");
         }
 
 
@@ -60,15 +64,17 @@ namespace SauceDemo.Tests
 
             var invalidUsername = "anyUsername";
             var tempPassword = "temp";
+            var expectedErrorMessage = "Password is required";
 
             #endregion
 
-            loginPageSteps.EnterUsernameAndPassword(invalidUsername, tempPassword);
-            loginPageSteps.ClearPasswordField();
-            loginPageSteps.ClickOnLoginButton();
-            var errorMsg = loginPageSteps.GetErrorMessage();
+            loginPage.EnterUsername(invalidUsername);
+            loginPage.EnterPassword(tempPassword);
+            loginPage.ClearPasswordField();
+            loginPage.ClickLogin();
+            var errorMsg = loginPage.ErrorMessage;
             log.Info($"UC-2 - Error Message: {errorMsg}");
-            errorMsg.Should().Contain("Password is required");
+            errorMsg.Should().Contain(expectedErrorMessage, "Incorrect error message was shown on Login page after entering empty password!");
         }
 
 
@@ -81,13 +87,14 @@ namespace SauceDemo.Tests
 
             //Enter valid password here(You can get it from SauceDemo website)
             var password = "";
+            var expectedTitle = "Swag Labs";
 
             #endregion
-
-            loginPageSteps.EnterUsernameAndPassword(validUsername, password);
-            loginPageSteps.ClickOnLoginButton();
+            loginPage.EnterUsername(validUsername);
+            loginPage.EnterPassword(password);
+            loginPage.ClickLogin();
             log.Info("Login to website");
-            driver.Title.Should().Be("Swag Labs", because: "user should be navigated to the dashboard with correct title");
+            driver.Title.Should().Be(expectedTitle, "Titile is not correct!");
         }
 
         public void Dispose()
